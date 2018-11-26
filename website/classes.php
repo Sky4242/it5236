@@ -370,7 +370,8 @@ class Application {
 			$data = array(
 				'emailvalidationid'=>$emailvalidationid,
 				'userid'=>$userid,
-				'email'=>$email
+				'email'=>$email,
+			
 			);
 			$data_json = json_encode($data);
 
@@ -382,44 +383,11 @@ class Application {
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			$response  = curl_exec($ch);
 			$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			if ($response === FALSE) {
-				$errors[] = "An unexpected failure occurred contacting the web service.";
-			} else {
-
-				if($httpCode == 400) {
-					
-					// JSON was double-encoded, so it needs to be double decoded
-					$errorsList = json_decode(json_decode($response))->errors;
-					foreach ($errorsList as $err) {
-						$errors[] = $err;
-					}
-					if (sizeof($errors) == 0) {
-						$errors[] = "Bad input";
-					}
-
-				} else if($httpCode == 500) {
-
-					$errorsList = json_decode(json_decode($response))->errors;
-					foreach ($errorsList as $err) {
-						$errors[] = $err;
-					}
-					if (sizeof($errors) == 0) {
-						$errors[] = "Server error";
-					}
-
-				} else if($httpCode == 200) {
-
-					$this->auditlog("sendValidationEmail", "Sending message to $email");
-
-				}
-
-			}
 			
-			curl_close($ch);
-            
+            $this->auditlog("sendValidationEmail", "Sending message to $email");
             
             // Send reset email
-           /* $pageLink = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+            $pageLink = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $pageLink = str_replace("register.php", "login.php", $pageLink);
             $to      = $email;
             $subject = 'Confirm your email address';
@@ -430,13 +398,13 @@ class Application {
                 'Reply-To: webmaster@russellthackston.me' . "\r\n";
             
             mail($to, $subject, $message, $headers);
-        */    
+            
             $this->auditlog("sendValidationEmail", "Message sent to $email");
             
         }
         
         // Close the connection
-        //$dbh = NULL;
+        $dbh = NULL;
         
     }
     
@@ -446,62 +414,12 @@ class Application {
         $success = FALSE;
         
         // Connect to the database
-        //$dbh = $this->getConnection();
-		 $url = "https://nrure58hjl.execute-api.us-east-1.amazonaws.com/default/validateEmail";
-			$data = array(
-				'emailvalidationid'=>$emailvalidationid
-			);
-			$data_json = json_encode($data);
-
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, array('x-api-key: Kdju2qBmqO1P68sd25Da78dgv2SaKLEi7PsqLHbC','Content-Type: application/json','Content-Length: ' . strlen($data_json)));
-			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			$response  = curl_exec($ch);
-			$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			if ($response === FALSE) {
-				$errors[] = "An unexpected failure occurred contacting the web service.";
-			} else {
-
-				if($httpCode == 400) {
-					
-					// JSON was double-encoded, so it needs to be double decoded
-					$errorsList = json_decode(json_decode($response))->errors;
-					foreach ($errorsList as $err) {
-						$errors[] = $err;
-					}
-					if (sizeof($errors) == 0) {
-						$errors[] = "Bad input";
-						 $this->auditlog("processEmailValidation", "Invalid request: $validationid");
-					}
-
-				} else if($httpCode == 500) {
-
-					$errorsList = json_decode(json_decode($response))->errors;
-					foreach ($errorsList as $err) {
-						$errors[] = $err;
-					}
-					if (sizeof($errors) == 0) {
-						$errors[] = "Server error";
-						 $this->auditlog("processEmailValidation", "Invalid request: $validationid");
-					}
-
-				} else if($httpCode == 200) {
-
-					$this->auditlog("processEmailValidation", "Received: $validationid");
-
-				}
-
-			}
-			
-			curl_close($ch);
+        $dbh = $this->getConnection();
         
-        
+        $this->auditlog("processEmailValidation", "Received: $validationid");
         
         // Construct a SQL statement to perform the insert operation
-       /*$sql = "SELECT userid FROM emailvalidation WHERE emailvalidationid = :emailvalidationid";
+        $sql = "SELECT userid FROM emailvalidation WHERE emailvalidationid = :emailvalidationid";
         
         // Run the SQL select and capture the result code
         $stmt = $dbh->prepare($sql);
@@ -569,7 +487,7 @@ class Application {
         
         
         // Close the connection
-       $dbh = NULL;*/
+        $dbh = NULL;
         
         return $success;
         
@@ -597,59 +515,8 @@ class Application {
             // Create a new session ID
             $sessionid = bin2hex(random_bytes(25));
             
-			 $url = "https://nrure58hjl.execute-api.us-east-1.amazonaws.com/default/NewSession";
-			$data = array(
-				'usersessions'=>$usersessionid,
-				'userid'=>$userid,
-				'registrationcode'=>$registrationcode
-				
-
-			);
-			$data_json = json_encode($data);
-
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, array('x-api-key: Kdju2qBmqO1P68sd25Da78dgv2SaKLEi7PsqLHbC','Content-Type: application/json','Content-Length: ' . strlen($data_json)));
-			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			$response  = curl_exec($ch);
-			$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			if ($response === FALSE) {
-				$errors[] = "An unexpected failure occurred contacting the web service.";
-			} else {
-
-				if($httpCode == 400) {
-					
-					// JSON was double-encoded, so it needs to be double decoded
-					$errorsList = json_decode(json_decode($response))->errors;
-					foreach ($errorsList as $err) {
-						$errors[] = $err;
-					}
-					if (sizeof($errors) == 0) {
-						$errors[] = "Bad input";
-                $this->auditlog("new session error", $stmt->errorInfo());
-					}
-
-				} else if($httpCode == 500) {
-
-					$errorsList = json_decode(json_decode($response))->errors;
-					foreach ($errorsList as $err) {
-						$errors[] = $err;
-					}
-					if (sizeof($errors) == 0) {
-						$errors[] = "Server error";
-                $this->auditlog("session", "new session id: $sessionid for user = $userid");
-					}
-
-				}
-
-			}
-			
-			curl_close($ch);
-        
             // Connect to the database
-       /*   $dbh = $this->getConnection();
+            $dbh = $this->getConnection();
             
             // Construct a SQL statement to perform the insert operation
             $sql = "INSERT INTO usersessions (usersessionid, userid, expires, registrationcode) " .
@@ -676,14 +543,14 @@ class Application {
                 setcookie('sessionid', $sessionid, time()+60*60*24*30);
                 $this->auditlog("session", "new session id: $sessionid for user = $userid");
                 
-         */       // Return the session ID
+                // Return the session ID
                 return $sessionid;
                 
             }
             
         }
         
-    
+    }
     
     public function getUserRegistrations($userid, &$errors) {
         

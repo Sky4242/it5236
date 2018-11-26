@@ -88,6 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+<div id="wrapper">
+
 	<?php include 'include/header.php'; ?>
 	<div class="breadcrumbs">
 		<a href="list.php">Back to things list</a>
@@ -118,6 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		</li>
 		<?php } ?>
 	</ul>
+			<form id="like-btn" class="vote parent" method="POST" target="_top" action-xhr="https://AmpedUpKids.com/castVote">
 	<div class="newcomment">
 		<form enctype="multipart/form-data" method="post" action="thing.php">
 			<textarea name="comment" id="comment" rows="4" cols="50" placeholder="Add a comment"></textarea>
@@ -131,5 +134,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	</div>
 	<?php include 'include/footer.php'; ?>
 	<script src="js/site.js"></script>
+</div>
 </body>
 </html>

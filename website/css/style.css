@@ -1,7 +1,17 @@
 body {
+	//background-color: lightgray;
+	//background: linear-gradient(#A7D2CB, white);
+	 background-image:url("javabackground.gif");
+
+	//background-size: cover;
+	//background-attachment: fixed;
+}
+main, h2{
 	margin: 15px 15px 15px 15px;
 }
-
+p{
+	background-color: #C98474;
+}
 div.nav {
 	float: right;
 	padding: 20px;
@@ -121,4 +131,50 @@ div.message {
 
 div.newattachmenttype {
 	background-color: #ccffcc;
+}
+
+#wrapper{
+	margin-left: auto; margin-right: auto;
+	width: 80%; 
+	background-color: #C98474;
+	//color:#3F2860;
+	min-width: 550px; max-width: 1280px;
+}
+.header{
+	background-color:#F2D388;
+	//background-image: url(images/chief_logo.png);
+   	background-repeat: no-repeat;
+    	//background-position: 10% 0%; 
+	//background-size: 100px;
+	//height:150px;
+	color:#874C62;
+}
+.footer{
+	background-color:#F2D388;
+	color:#000000;
+	text-align: center;
+	font-style: italic;
+	font-size: .60em;
+	padding: 1em;
+}
+
+h1{
+	padding-top: 50px;
+	padding-left: 2em;
+}
+
+#chief{
+ 	font-family: 'Garamond', 'Futura' cursive;
+	margin-top: 50px;
+	margin-left: 15px;
+	width: 250px;
+	font-size: 60px;
+	text-decoration: none;
+	color:red;
+}#heroheader{
+	height:300px;
+	color:#F5F5DC;
+	background-image:url("heroheader.jpg");
+	background-size:100% 100%;
+	//margin-left:175px;
 }

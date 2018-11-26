@@ -24,6 +24,7 @@
 
 
 ?>
+	<div class="header">
 	<div class="nav">
 		<a href="index.php">Home</a>
 		&nbsp;&nbsp;
@@ -49,4 +50,5 @@
 
 		<?php } ?>
 	</div>
-	<h1>IT 5236</h1>
+	<h1 id="chief">Chief</h1>
+	</div>

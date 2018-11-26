@@ -7,36 +7,21 @@ require_once('include/classes.php');
 $app = new Application();
 $app->setup();
 
-// Declare a set of variables to hold the username and password for the user
-$username = "";
+// Declare a set of variables to hold the one time password for the user
 $password = "";
 
 // Declare an empty array of error messages
 $errors = array();
 
-// If someone has clicked their email validation link, then process the request
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-
-	if (isset($_GET['id'])) {
-		
-		$success = $app->processEmailValidation($_GET['id'], $errors);
-		if ($success) {
-			$message = "Email address validated. You may login.";
-		}
-
-	}
-
-}
 
 // If someone is attempting to login, process their request
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-	// Pull the username and password from the <form> POST
-	$username = $_POST['username'];
-	$password = $_POST['password'];
+	// Pull the password from the <form> POST
+	$password = $otp;
 
 	// Attempt to login the user and capture the result flag
-	$result = $app->login($username, $password, $errors);
+	$result = $app->login($password, $errors);
 
 	// Check to see if the login attempt succeeded
 	if ($result == TRUE) {
@@ -48,18 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 
 }
-
-if (isset($_GET['register']) && $_GET['register']== 'success') {
-	$message = "Registration successful. Please check your email. A message has been sent to validate your address.";
-}
-
 ?>
 
 <!doctype html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>sky4242.me</title>
+	<title>skyedwards.me</title>
 	<meta name="description" content="Sky's personal website for IT 5233">
 	<meta name="author" content="Sky Edwards">
 	<link rel="stylesheet" href="css/style.css">
@@ -70,37 +50,26 @@ if (isset($_GET['register']) && $_GET['register']== 'success') {
 	2. Display Login form (sticky):  Username and Password -->
 
 <body>
-<div id="wrapper">
-
 	<?php include 'include/header.php'; ?>
 
-	<h2>Login</h2>
+	<h2>One Time Password</h2>
 
 	<?php include('include/messages.php'); ?>
 	
 	<div>
-		<form method="post" action="login.php" id="usernameForm">
+		<form method="post" action="otp.php">
 			
-			<input type="text" name="username" id="username" placeholder="Username" value="<?php echo $username; ?>" />
-			<br/>
 
 			<input type="password" name="password" id="password" placeholder="Password" value="<?php echo $password; ?>" />
-			<br><br/>
-
-			<input type="checkbox" id="saveLocal">Remember User Name?<br><br>
+			<br/>
 
 			<input type="submit" value="Login" name="login" />
-			
-			
-			
 		</form>
 	</div>
 	<a href="register.php">Need to create an account?</a>
 	<br/>
-	<a href="reset.php">Forgot your password?</a>
+	<a href="reset.php">Resend your password?</a>
 	<?php include 'include/footer.php'; ?>
 	<script src="js/site.js"></script>
-</div>
-
 </body>
 </html>

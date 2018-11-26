@@ -65,8 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!--1. Display Errors if any exists 
 	2. If no errors display things -->
 <body>
+<div id="wrapper">
+
 	<?php include 'include/header.php'; ?>
-	<h2>My Things</h2>
+	<h2>My Topics</h2>
 	
 	<?php include('include/messages.php'); ?>
 	
@@ -91,16 +93,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	</ul>
 	<div class="newthing">
 		<form enctype="multipart/form-data" method="post" action="list.php">
-			<input type="text" name="name" id="name" size="81" placeholder="Enter a thing name" value="<?php echo $name; ?>" />
+			<input type="text" name="name" id="name" size="81" placeholder="Enter a new topic name" value="<?php echo $name; ?>" />
 			<br/>
 			<label for="attachment">Add an image, PDF, etc.</label>
 			<input id="attachment" name="attachment" type="file">
 			<br/>
-			<input type="submit" name="start" value="Create Thing" />
+			<input type="submit" name="start" value="Create Topic" />
 			<input type="submit" name="cancel" value="Cancel" />
 		</form>
 	</div>
 	<?php include 'include/footer.php'; ?>
 	<script src="js/site.js"></script>
+</div>
 </body>
 </html>

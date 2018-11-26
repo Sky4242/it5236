@@ -86,6 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+<div id="wrapper">
+
 	<?php include 'include/header.php'; ?>
 
 	<h2>Edit Profile</h2>
@@ -111,5 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	</div>
 	<?php include 'include/footer.php'; ?>
 	<script src="js/site.js"></script>
+</div>
 </body>
 </html>

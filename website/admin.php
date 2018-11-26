@@ -52,6 +52,8 @@ $attachmentTypes = $app->getAttachmentTypes($errors);
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+<div id="wrapper">
+
 	<?php include 'include/header.php'; ?>
 	<h2>Admin Functions</h2>
 	<?php include 'include/messages.php'; ?>
@@ -85,5 +87,6 @@ $attachmentTypes = $app->getAttachmentTypes($errors);
 	</div>
 	<?php include 'include/footer.php'; ?>
 	<script src="js/site.js"></script>
+</div>
 </body>
 </html>

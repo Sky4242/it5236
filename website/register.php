@@ -45,15 +45,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>russellthackston.me</title>
-	<meta name="description" content="Russell Thackston's personal website for IT 5233">
-	<meta name="author" content="Russell Thackston">
+	<title>sky4242.me</title>
+	<meta name="description" content="Sky's personal website for IT 5233">
+	<meta name="author" content="Sky Edwards">
 	<link rel="stylesheet" href="css/style.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <!--1. Display Errors if any exists 
 	2. Display Registration form (sticky):  Username, Password, Question, and Answer -->
 <body>
+<div id="wrapper">
+
 	<?php include 'include/header.php'; ?>
 	
 	<h2>Register</h2>
@@ -76,5 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	<a href="login.php">Already a member?</a>
 	<?php include 'include/footer.php'; ?>
 	<script src="js/site.js"></script>
+</div>
 </body>
 </html>
